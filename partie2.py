@@ -3,6 +3,7 @@ from requests import get
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
+import os
 
 books = [] #va contenir la liste des titres de tous les livres de la categorie
 url_books = [] #va contenir la liste des urls des livres de la categorie
@@ -29,3 +30,4 @@ print(my_work)
 #creation d un fichier CSV contenant le tableau ordoné
 #my_work.to_csv("toutelacategory.to_csv")
 
+os.system("pause") 
