@@ -1,8 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-
-url = "http://books.toscrape.com/catalogue/sapiens-a-brief-history-of-humankind_996/index.html" 
+import os
+url = input("Entrez l'adresse d'un produit : " )
+#url = "http://books.toscrape.com/catalogue/sapiens-a-brief-history-of-humankind_996/index.html" 
 page = requests.get(url)
 soup = BeautifulSoup(page.content, "html.parser")
 
@@ -54,6 +55,6 @@ print(product)
 #changer pd.Series pour DataFrame
 
 #product.to_csv("product.to_csv")
-
+os.system("pause") 
 
 
