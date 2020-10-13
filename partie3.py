@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-
+import os
 url = "http://books.toscrape.com/" 
 page = requests.get(url)
 soup = BeautifulSoup(page.content, "html.parser")
@@ -17,3 +17,4 @@ category = pd.DataFrame(
 print(category)
 
 #category.to_csv("accueil.to_csv")
+os.system("pause") 
