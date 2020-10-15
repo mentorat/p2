@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 import pandas as pd
 import numpy as np
-
+url = "http://books.toscrape.com/catalogue/"
 books = [] #va contenir la liste des titres de tous les livres de la categorie
 products_url = [] #va contenir la liste des urls des livres de la categorie
 pages = np.arange(1, 3, 1) # debute page 1, termine page 2, va de 1 en 1
@@ -18,7 +18,7 @@ for page in pages: #page est la variable iteree dans pages creee ci dessus
     for container in book_div:
         title = container.h3.a.text # le titre du livre est contenu dans a qui est contenu dans h3, il faut prendre le texte
         books.append(title) # on ajoute la valeur de book a la liste book
-        product_page_url = container.h3.a.get("href")
+        product_page_url = url + container.h3.a.get("href").replace('../../../', '')
         products_url.append(product_page_url)
 print(products_url)       
 
