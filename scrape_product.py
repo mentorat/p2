@@ -47,7 +47,7 @@ review_rating = len(stars.find_all(class_= "icon-star"))
 image = soup.find("img")
 image_url = url + image["src"]
 
-#si on veut creer une page CSV par livre :
+#si on veut creer une page CSV pour le livre :
 #product.to_csv("product.to_csv")
 
 os.system("pause") 
