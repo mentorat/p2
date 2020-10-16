@@ -5,8 +5,9 @@ from requests import get
 
 from bs4 import BeautifulSoup
 
-import pandas as pd
 import numpy as np
+
+import time
 
 url = "http://books.toscrape.com/" 
 page = requests.get(url)
@@ -16,11 +17,7 @@ li = list_category.find_all("li")
 category_url =[url + item.find("a", href= True).get("href") for item in  li]
 print(category_url)
 
-category = pd.DataFrame(
-    {
-        "CATEGORY URL": category_url,
-    })
-print(category)
+# si on veut creer une page CSV des categories:
 
 #category.to_csv("accueil.to_csv")
 os.system("pause") 
