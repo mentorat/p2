@@ -5,7 +5,6 @@ from requests import get
 
 from bs4 import BeautifulSoup
 
-import pandas as pd
 import numpy as np
 import time
 
@@ -49,20 +48,19 @@ with open("urlbooks.txt", "r") as file :
             review_rating = len(stars.find_all(class_= "icon-star"))
             image = soup1.find("img")
             image_url = url + image["src"]
-            print( "TITLE : " + title)
+            print("PRODUCT PAGE URL : " + str(product_page_url) +"UPC : " + universal_product_code +"TITLE : " + title +"PRICE INCLUDING TAX : " + price_including_tax +"PRICE EXCLUDING TAX : " + price_excluding_tax +"NUMBER AVAILABLE : " + number_available +"PRODUCT DESCRIPTION : " + product_description +"CATEGORY : " + category +"REVIEW RATING : " + str(review_rating) +"IMAGE URL : " + str(image_url))
         time.sleep(1)
 
 
-
-"""#creation d un tableau avec pandas DataFrame
-my_work = pd.DataFrame( 
-    {
-        "TITLE : ": books,
-        "URL" : products_url,
-    })
-print(my_work)
-
-#creation d un fichier CSV contenant le tableau ordoné
-#my_work.to_csv("toutelacategory.to_csv")"""
-
 os.system("pause") 
+
+""""PRODUCT PAGE URL : " + str(product_page_url) +
+"UPC : " + universal_product_code +
+"TITLE : " + title +
+"PRICE INCLUDING TAX : " + price_including_tax +
+"PRICE EXCLUDING TAX : " + price_excluding_tax +
+"NUMBER AVAILABLE : " + number_available +
+"PRODUCT DESCRIPTION : " + product_description +
+"CATEGORY : " + category +
+"REVIEW RATING : " + str(review_rating) +
+"IMAGE URL : " + str(image_url)"""
