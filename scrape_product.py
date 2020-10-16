@@ -5,8 +5,11 @@ from requests import get
 
 from bs4 import BeautifulSoup
 
-import pandas as pd
 import numpy as np
+
+import time
+
+#SCRAPER LES INFOS D UN LIVRE  SUR SA PAGE 
 
 url = "http://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html"
 page = requests.get(url)
@@ -44,22 +47,9 @@ review_rating = len(stars.find_all(class_= "icon-star"))
 image = soup.find("img")
 image_url = url + image["src"]
 
-product =pd.Series({
-    "PRODUCT PAGE URL: ": product_page_url,
-    "UNIVERSAL PRODUCT CODE : ": universal_product_code,
-    "TITLE : " : title,
-    "PRICE INCLUDING TAX : ": price_including_tax,
-    "PRICE EXCLUDING TAX : ": price_excluding_tax,
-    "NUMBER AVAILABLE : ": number_available,
-    "PRODUCT DESCRIPTION" : product_description,
-    "CATEGORY : ": category,
-    "REVIEW_RATING : ": review_rating,
-    "IMAGE_URL : ": image_url,
-})
-print(product)
-#changer pd.Series pour DataFrame
-
+#si on veut creer une page CSV par livre :
 #product.to_csv("product.to_csv")
+
 os.system("pause") 
 
 
