@@ -23,11 +23,36 @@ for page in pages: #page est la variable iteree dans pages creee ci dessus
         products_url.append(product_page_url)
     time.sleep(1)
 
-print(products_url) 
-
 with open("urlbooks.txt", "w") as file :
     for product_page_url in products_url :
         file.write(str(product_page_url) + "\n")      
+
+with open("urlbooks.txt", "r") as file :
+    for row in file :
+        url = row.strip()
+        page1 = requests.get(url)
+        if page1.ok :
+            soup1 = BeautifulSoup(page1.content, "html.parser")
+            title = soup1.h1.string
+            table_striped = soup1.find(class_="table table-striped")
+            td = table_striped.find_all("td")
+            universal_product_code = td[0].string
+            price_including_tax = td[3].string
+            price_excluding_tax = td[2].string
+            number_available = td[5].string
+            p = soup1.find_all("p")
+            product_description = p[3].string
+            breadcrumb = soup1.find(class_= "breadcrumb")
+            a = breadcrumb.find_all("a")
+            category = a[2].string
+            stars = soup1.find(class_="col-sm-6 product_main")
+            review_rating = len(stars.find_all(class_= "icon-star"))
+            image = soup1.find("img")
+            image_url = url + image["src"]
+            print( "TITLE : " + title)
+        time.sleep(1)
+
+
 
 """#creation d un tableau avec pandas DataFrame
 my_work = pd.DataFrame( 
