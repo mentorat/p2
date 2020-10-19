@@ -21,19 +21,19 @@ for page in pages: #page est la variable iteree dans pages creee ci dessus
     soup = BeautifulSoup(page.text, 'html.parser')
     book_div = soup.find_all("article", class_="product_pod")
     for container in book_div:
-        product_page_url = container.h3.a.get("href").replace('../../../', '')
+        product_page_url = url + container.h3.a.get("href").replace('../../../', '')
         products_url.append(product_page_url)
     time.sleep(1)
 
-#creation d un fichier CSV URL BOOKS par categorie :
-with open("urlbooks.csv", "w") as file :
+#creation d un fichier  URL BOOKS par categorie :
+with open("urlbooks_nom_category.txt", "w") as file :
     for product_page_url in products_url :
         file.write(str(product_page_url) + "\n")
 
-#creation d un fichier CSV DETAIL BOOK par categorie :
+#creation d un fichier CSV DETAIL BOOKs par categorie : products_nom_category.csv
 # en utilisant category_url on cree 1 fichier nom_category.csv avec le detail de chaque livre
-with open("categories.csv", "r") as inf :
-    with open("nom_category.csv", "w") as outf :
+with open("urlbooks_nom_category.txt", "r") as inf :
+    with open("products_nom_category.csv", "w") as outf :
         outf.write("PRODUCT PAGE URL : , UPC : , TITLE : , PRICE INCLUDING TAX : , PRICE EXCLUDING TAX : , NUMBER AVAILABLE : , PRODUCT DESCRIPTION : , CATEGORY : , REVIEW RATING : , IMAGE URL :\n")
         for row in inf :
             url = row.strip()
@@ -56,9 +56,9 @@ with open("categories.csv", "r") as inf :
                 review_rating = len(stars.find_all(class_= "icon-star"))
                 image = soup1.find("img")
                 image_url = url + image["src"]
-                outf.write(str(product_page_url) + universal_product_code + title + price_including_tax + price_excluding_tax + number_available + product_description + category + str(review_rating) + str(image_url) +"\n")
+                outf.write(str(product_page_url) + universal_product_code +  title + price_including_tax + price_excluding_tax + number_available + product_description + category + str(review_rating) + str(image_url) +"\n")
             time.sleep(1)
 
 
 os.system("pause") 
-#A FAIRE : meilleure mise en page, afficher les £
+#A FAIRE : meilleure mise en page, espacer les valeurs afficher les £
