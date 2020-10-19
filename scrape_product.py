@@ -48,7 +48,9 @@ image = soup.find("img")
 image_url = url + image["src"]
 
 #si on veut creer une page CSV pour le livre :
-#product.to_csv("product.to_csv")
+with open("product.csv", "w") as file :
+    file.write("PRODUCT PAGE URL : , UPC : , TITLE : , PRICE INCLUDING TAX : , PRICE EXCLUDING TAX : , NUMBER AVAILABLE : , PRODUCT DESCRIPTION : , CATEGORY : , REVIEW RATING : , IMAGE URL :\n")
+    file.write(str(product_page_url) + universal_product_code + title + price_including_tax + price_excluding_tax + number_available + product_description + category + str(review_rating) + str(image_url) +"\n")
 
 os.system("pause") 
 
