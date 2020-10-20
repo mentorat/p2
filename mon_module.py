@@ -7,8 +7,6 @@ from bs4 import BeautifulSoup
 
 import numpy as np
 
-import time
-
 import csv
 
 #creation d une liste contenant les url des categories :
@@ -20,10 +18,10 @@ def category():
     list_category = soup.find(class_= "nav nav-list")
     li = list_category.find_all("li")
     for item in li :
-        category_url= url + item.find("a", href= True).get("href")
+        category_url = url + item.find("a", href= True).get("href")
         categories_urls.append(category_url)
     #print(categories_urls)
-    # #len(categories_urls)= 50    
+    ##len(categories_urls)= 50    
     return
 
 #CA FONCTIONNE 
@@ -47,8 +45,10 @@ def products():
 
 #CA FONCTIONNE 
 
-# creation dictionnaire qui va contenir les details dun livre
+# creation dictionnaire qui va contenir les details dun livre book et une liste de tous les livres BOOKS
 def books():
+    books =[]
+    book = {}
     for product_page_url in products_url :
         url_book = product_page_url
         page = requests.get(url_book)
@@ -71,4 +71,4 @@ def books():
         book["image_url"] = url_book + image["src"]
         books.append(book)
     #print(len(books))
-    return()
+    return
