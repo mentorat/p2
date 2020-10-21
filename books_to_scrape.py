@@ -37,12 +37,14 @@ else :
 
 
 #ca marche pour la 1ere page de la categorie
-page1 = requests.get(choix)
-soup1 = BeautifulSoup(page1.content, 'html.parser')
-book_div = soup1.find_all("article", class_="product_pod")
-for container in book_div:
-    product_page_url = "http://books.toscrape.com/catalogue/" + container.h3.a.get("href").replace('../../../', '').replace("../../", "")
-    products_url.append(product_page_url)
+for i in range(1,10) :
+    url = choix.replace("index.html","page-")+str(i)+".html"
+    page1 = requests.get(url)
+    soup1 = BeautifulSoup(page1.content, 'html.parser')
+    book_div = soup1.find_all("article", class_="product_pod")
+    for container in book_div:
+        product_page_url = "http://books.toscrape.com/catalogue/" + container.h3.a.get("href").replace('../../../', '').replace("../../", "")
+        products_url.append(product_page_url)
 print("La categorie contient : " + str(len(products_url))+" livres.")
 print("Veuillez patienter ... "+"\n")
 
@@ -51,7 +53,7 @@ with open("products.csv", "w",) as csvfile :
         csvfile.write(str(product_page_url)+"\n")
 
 with open("products.csv", "r") as inf :
-    with open("lolol.csv", "w", newline="", encoding="utf8") as outf :
+    with open("livres.csv", "w", newline="", encoding="utf8") as outf :
         writer = csv.DictWriter(outf, fieldnames=book.keys(), delimiter=";")
         for row in inf:
             url = row.strip()
@@ -76,7 +78,7 @@ with open("products.csv", "r") as inf :
             image = soup.find("img")
             book["image_url"] = url + image["src"]
             books.append(book)
-            writer.writeheader()
+            writer.writeheader() # ATTENTION AFFICHE LES ENTETES POUR CHAQUE LIVRE
             writer.writerow(book)
 
 os.system("pause") 
