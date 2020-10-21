@@ -7,8 +7,6 @@ from bs4 import BeautifulSoup
 
 import numpy as np
 
-import time
-
 import csv
 
 
@@ -23,7 +21,6 @@ for page in pages: #page est la variable iteree dans pages creee ci dessus
     for container in book_div:
         product_page_url = url + container.h3.a.get("href").replace('../../../', '')
         products_url.append(product_page_url)
-    time.sleep(1)
 
 #creation d un fichier  URL BOOKS par categorie :
 with open("urlbooks_nom_category.txt", "w") as file :
@@ -33,7 +30,7 @@ with open("urlbooks_nom_category.txt", "w") as file :
 #creation d un fichier CSV DETAIL BOOKs par categorie : products_nom_category.csv
 # en utilisant category_url on cree 1 fichier nom_category.csv avec le detail de chaque livre
 with open("urlbooks_nom_category.txt", "r") as inf :
-    with open("products_nom_category.csv", "w") as outf :
+    with open("products_nom_category.csv", "w" newline="", encoding="utf8") as outf :
         outf.write("PRODUCT PAGE URL : , UPC : , TITLE : , PRICE INCLUDING TAX : , PRICE EXCLUDING TAX : , NUMBER AVAILABLE : , PRODUCT DESCRIPTION : , CATEGORY : , REVIEW RATING : , IMAGE URL :\n")
         for row in inf :
             url = row.strip()
@@ -57,8 +54,7 @@ with open("urlbooks_nom_category.txt", "r") as inf :
                 image = soup1.find("img")
                 image_url = url + image["src"]
                 outf.write(str(product_page_url) + universal_product_code +  title + price_including_tax + price_excluding_tax + number_available + product_description + category + str(review_rating) + str(image_url) +"\n")
-            time.sleep(1)
-
+            
 
 os.system("pause") 
 #A FAIRE : meilleure mise en page, espacer les valeurs afficher les £
