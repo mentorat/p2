@@ -8,10 +8,9 @@ from bs4 import BeautifulSoup
 import csv
 
 categories_urls =[]
-products_url = []
+producs_urls = []
 books =[]
 book ={}
-#trouver comment avoirfieldnames=book.keys()
 field_names =["product_page_url","universal_product_code","title","price_including_tax","price_excluding_tax","number_available","product_description","category","review_rating","image_url"]
 
 url = "http://books.toscrape.com/"
@@ -23,34 +22,41 @@ for item in li :
     category_url = url + item.find("a", href= True).get("href")
     categories_urls.append(category_url)
 
-#creation fichier CSV des categories + url :
 with open("categories.csv", "w",) as csvfile :
     for category_url in categories_urls :
         csvfile.write(str(category_url)+"\n")
 
 print("BIENVENUE SUR BOOK to SCRAPE : ")
-choix = input("Quelle est l'URL de la categorie voulez vous scraper ? "+"\n")
+choice = input("Quelle est l'URL de la categorie voulez vous scraper ? "+"\n")
 
-if choix in categories_urls :
+if choice in categories_urls :
     print("Bravo ")
     print("Veuillez patienter ... "+"\n")
+
 else :
     print("ERREUR ! VEUILLEZ RE ESSAYER ")
 
-for i in range(1,10) :
-    url = choix.replace("index.html","page-")+str(i)+".html"
+page1 = requests.get(choice)
+soup1 = BeautifulSoup(page1.content, 'html.parser')
+book_div = soup1.find_all("article", class_="product_pod")
+for container in book_div:
+    product_page_url = "http://books.toscrape.com/catalogue/" + container.h3.a.get("href").replace('../../../', '').replace("../../", "")
+    producs_urls.append(product_page_url)
+
+for i in range(2,10) :
+    url = choice.replace("index.html","page-")+str(i)+".html"
     page1 = requests.get(url)
     soup1 = BeautifulSoup(page1.content, 'html.parser')
     book_div = soup1.find_all("article", class_="product_pod")
     for container in book_div:
         product_page_url = "http://books.toscrape.com/catalogue/" + container.h3.a.get("href").replace('../../../', '').replace("../../", "")
-        products_url.append(product_page_url)
+        producs_urls.append(product_page_url)
 
-print("La categorie contient : " + str(len(products_url))+" livres.")
+print("La categorie contient : " + str(len(producs_urls))+" livres.")
 print("Veuillez patienter ... "+"\n")
 
 with open("products.csv", "w",) as csvfile :
-    for product_page_url in products_url:
+    for product_page_url in producs_urls:
         csvfile.write(str(product_page_url)+"\n")
 
 with open("products.csv", "r") as inf :
@@ -83,4 +89,15 @@ with open("products.csv", "r") as inf :
             writer.writerow(book)
 
 print("Un fichier csv a été créé contenant toutes les informations de chaque livre de la categorie.")
+
 os.system("pause") 
+
+#A FAIRE
+# trouver comment avoirfieldnames=book.keys()
+# integrer le propgramme dans la boucle if/else
+# boucle en cas de else : redemander une categorie valide
+# boucle pour demander une autre categorie
+# creation de repertoire pour stocker les fichiers csv
+# automatiser le nom des fichiers csv
+# recuperer les images
+# mise en page des fichiers csv
