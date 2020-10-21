@@ -10,7 +10,9 @@ import csv
 categories_urls =[]
 products_url = []
 books =[]
-book = {}
+book ={}
+#trouver comment avoirfieldnames=book.keys()
+field_names =["product_page_url","universal_product_code","title","price_including_tax","price_excluding_tax","number_available","product_description","category","review_rating","image_url"]
 
 url = "http://books.toscrape.com/"
 page = requests.get(url)
@@ -31,12 +33,10 @@ choix = input("Quelle est l'URL de la categorie voulez vous scraper ? "+"\n")
 
 if choix in categories_urls :
     print("Bravo ")
-    print("Veuillez patienter ... "+"\n") 
+    print("Veuillez patienter ... "+"\n")
 else :
     print("ERREUR ! VEUILLEZ RE ESSAYER ")
 
-
-#ca marche pour la 1ere page de la categorie
 for i in range(1,10) :
     url = choix.replace("index.html","page-")+str(i)+".html"
     page1 = requests.get(url)
@@ -45,6 +45,7 @@ for i in range(1,10) :
     for container in book_div:
         product_page_url = "http://books.toscrape.com/catalogue/" + container.h3.a.get("href").replace('../../../', '').replace("../../", "")
         products_url.append(product_page_url)
+
 print("La categorie contient : " + str(len(products_url))+" livres.")
 print("Veuillez patienter ... "+"\n")
 
@@ -54,7 +55,8 @@ with open("products.csv", "w",) as csvfile :
 
 with open("products.csv", "r") as inf :
     with open("livres.csv", "w", newline="", encoding="utf8") as outf :
-        writer = csv.DictWriter(outf, fieldnames=book.keys(), delimiter=";")
+        writer = csv.DictWriter(outf, fieldnames=field_names, delimiter=";")
+        writer.writeheader()
         for row in inf:
             url = row.strip()
             page1 = requests.get(url)
@@ -78,7 +80,7 @@ with open("products.csv", "r") as inf :
             image = soup.find("img")
             book["image_url"] = url + image["src"]
             books.append(book)
-            writer.writeheader() # ATTENTION AFFICHE LES ENTETES POUR CHAQUE LIVRE
             writer.writerow(book)
 
+print("Un fichier csv a été créé contenant toutes les informations de chaque livre de la categorie.")
 os.system("pause") 
