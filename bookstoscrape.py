@@ -7,6 +7,11 @@ from bs4 import BeautifulSoup
 
 import csv
 
+try: 
+ os.makedirs('BooksToScrape')
+except OSError:
+    if not os.path.isdir('BooksToScrape'):
+        Raise
 
 producs_urls = []
 categories_name = []
@@ -30,6 +35,7 @@ for item in li :
 with open("categories.csv", "w", newline="", encoding="utf8") as csvfile :
     for category_url in categories_urls :
         csvfile.write(str(category_url)+"\n")
+csvfile.close()
 
 print("BIENVENUE SUR BOOK to SCRAPE : ")
 choice = input("Quelle est l'URL de la categorie voulez vous scraper ? "+"\n")
@@ -58,7 +64,7 @@ print("Veuillez patienter ... "+"\n")
 with open(category_title+"_url.csv", "w", newline="", encoding="utf8") as csvfile :
     for product_page_url in producs_urls:
         csvfile.write(str(product_page_url)+"\n")
-
+csvfile.close()
 with open(category_title+"_url.csv", "r") as inf :
     with open(category_title+"_books.csv", "w", newline="", encoding="utf8") as outf :
         writer = csv.DictWriter(outf, fieldnames=header, delimiter=";")
@@ -79,7 +85,6 @@ with open(category_title+"_url.csv", "r") as inf :
             book["product_description"] = p[3].string
             breadcrumb = soup.find(class_= "breadcrumb")
             a = breadcrumb.find_all("a")
-            category = a[2].string
             book["category"] = a[2].string
             stars = soup.find(class_="col-sm-6 product_main")
             book["review_rating"] = len(stars.find_all(class_= "icon-star"))
@@ -87,7 +92,9 @@ with open(category_title+"_url.csv", "r") as inf :
             book["image_url"] = url + image["src"]
             books.append(book)
             writer.writerow(book)
-print("Un fichier csv a été créé contenant toutes les informations de chaque livre de la categorie.")
+    outf.close()
+inf.close()
+print("Un fichier "+ category_title +".csv a été créé contenant toutes les informations de chaque livre de la categorie.")
 
 os.system("pause") 
 
@@ -97,6 +104,5 @@ os.system("pause")
 # boucle en cas de else : redemander une categorie valide
 # boucle pour demander une autre categorie
 # creation de repertoire pour stocker les fichiers csv
-# automatiser le nom des fichiers csv
 # recuperer les images
 # mise en page des fichiers csv
