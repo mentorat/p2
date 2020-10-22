@@ -7,37 +7,37 @@ from bs4 import BeautifulSoup
 
 import csv
 
-categories_urls =[]
+
 producs_urls = []
+categories_name = []
+categories_urls = []
 books =[]
 book ={}
-field_names =["product_page_url","universal_product_code","title","price_including_tax","price_excluding_tax","number_available","product_description","category","review_rating","image_url"]
+header =["product_page_url","universal_product_code","title","price_including_tax","price_excluding_tax","number_available","product_description","category","review_rating","image_url"]
 
 url = "http://books.toscrape.com/"
 page = requests.get(url)
 soup = BeautifulSoup(page.content, "html.parser")
 list_category = soup.find(class_= "nav nav-list")
 li = list_category.find_all("li")
+
 for item in li :
     category_url = url + item.find("a", href= True).get("href")
     categories_urls.append(category_url)
+    category_name = item.find("a").get_text().strip()
+    categories_name.append(category_name)
 
-with open("categories.csv", "w",) as csvfile :
+with open("categories.csv", "w", newline="", encoding="utf8") as csvfile :
     for category_url in categories_urls :
         csvfile.write(str(category_url)+"\n")
 
 print("BIENVENUE SUR BOOK to SCRAPE : ")
 choice = input("Quelle est l'URL de la categorie voulez vous scraper ? "+"\n")
-
-if choice in categories_urls :
-    print("Bravo ")
-    print("Veuillez patienter ... "+"\n")
-
-else :
-    print("ERREUR ! VEUILLEZ RE ESSAYER ")
+print("Veuillez patienter ... "+"\n")
 
 page1 = requests.get(choice)
 soup1 = BeautifulSoup(page1.content, 'html.parser')
+category_title = soup1.find(class_="page-header action").get_text().strip()
 book_div = soup1.find_all("article", class_="product_pod")
 for container in book_div:
     product_page_url = "http://books.toscrape.com/catalogue/" + container.h3.a.get("href").replace('../../../', '').replace("../../", "")
@@ -55,13 +55,13 @@ for i in range(2,10) :
 print("La categorie contient : " + str(len(producs_urls))+" livres.")
 print("Veuillez patienter ... "+"\n")
 
-with open("products.csv", "w",) as csvfile :
+with open(category_title+"_url.csv", "w", newline="", encoding="utf8") as csvfile :
     for product_page_url in producs_urls:
         csvfile.write(str(product_page_url)+"\n")
 
-with open("products.csv", "r") as inf :
-    with open("livres.csv", "w", newline="", encoding="utf8") as outf :
-        writer = csv.DictWriter(outf, fieldnames=field_names, delimiter=";")
+with open(category_title+"_url.csv", "r") as inf :
+    with open(category_title+"_books.csv", "w", newline="", encoding="utf8") as outf :
+        writer = csv.DictWriter(outf, fieldnames=header, delimiter=";")
         writer.writeheader()
         for row in inf:
             url = row.strip()
@@ -87,13 +87,12 @@ with open("products.csv", "r") as inf :
             book["image_url"] = url + image["src"]
             books.append(book)
             writer.writerow(book)
-
 print("Un fichier csv a été créé contenant toutes les informations de chaque livre de la categorie.")
 
 os.system("pause") 
 
 #A FAIRE
-# trouver comment avoirfieldnames=book.keys()
+# trouver comment avoir fieldnames=book.keys()
 # integrer le propgramme dans la boucle if/else
 # boucle en cas de else : redemander une categorie valide
 # boucle pour demander une autre categorie
