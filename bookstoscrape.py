@@ -7,10 +7,9 @@ from bs4 import BeautifulSoup
 
 import csv
 
-
 path = 'BooksToScrape'
 try: 
- os.makedirs(path)
+    os.makedirs(path)
 except OSError:
     if not os.path.isdir(path):
         Raise
@@ -81,11 +80,12 @@ with open(category_title+"_url.csv", "r") as inf :
         writer = csv.DictWriter(outf, fieldnames=header, delimiter=";")
         writer.writeheader()
         for row in inf:
-            url = row.strip()
-            page1 = requests.get(url)
+            url1 = row.strip()
+            page1 = requests.get(url1)
             soup = BeautifulSoup(page1.content, "html.parser")
-            book["product_page_url"] = url
-            book["title"] = soup.h1.string
+            book["product_page_url"] = url1
+            title = soup.h1.string
+            book["title"] = title
             table_striped = soup.find(class_="table table-striped")
             td = table_striped.find_all("td")
             book["universal_product_code"] = td[0].string
@@ -100,12 +100,18 @@ with open(category_title+"_url.csv", "r") as inf :
             stars = soup.find(class_="col-sm-6 product_main")
             book["review_rating"] = len(stars.find_all(class_= "icon-star"))
             image = soup.find("img")
-            book["image_url"] = url + image["src"]
+            image_url = "https://books.toscrape.com" + image["src"].replace("../..","").replace("../../../..","")
+            book["image_url"] = image_url
             books.append(book)
+            images = requests.get(image_url)
+            file = open(title +".jpg", "wb")
+            file.write(images.content)
+            file.close()
             writer.writerow(book)
     outf.close()
 inf.close()
-print("Un dossier "+ category_title +"a été créé contenant toutes les informations de chaque livre de la categorie.")
+
+print("Un dossier "+ category_title +" a été créé contenant toutes les informations de chaque livre de la categorie.")
 
 os.system("pause") 
 
@@ -114,5 +120,4 @@ os.system("pause")
 # integrer le propgramme dans la boucle if/else
 # boucle en cas de else : redemander une categorie valide
 # boucle pour demander une autre categorie
-# recuperer les images
 # mise en page des fichiers csv
