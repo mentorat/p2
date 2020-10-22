@@ -7,11 +7,14 @@ from bs4 import BeautifulSoup
 
 import csv
 
+
+path = 'BooksToScrape'
 try: 
- os.makedirs('BooksToScrape')
+ os.makedirs(path)
 except OSError:
-    if not os.path.isdir('BooksToScrape'):
+    if not os.path.isdir(path):
         Raise
+os.chdir(path) #ouvre le fichier path et va enregistrer les fichiers csv dedans
 
 producs_urls = []
 categories_name = []
@@ -61,6 +64,14 @@ for i in range(2,10) :
 print("La categorie contient : " + str(len(producs_urls))+" livres.")
 print("Veuillez patienter ... "+"\n")
 
+path_cat = category_title
+try: 
+ os.makedirs(path_cat)
+except OSError:
+    if not os.path.isdir(path_cat):
+        Raise
+os.chdir(path_cat)
+
 with open(category_title+"_url.csv", "w", newline="", encoding="utf8") as csvfile :
     for product_page_url in producs_urls:
         csvfile.write(str(product_page_url)+"\n")
@@ -94,7 +105,7 @@ with open(category_title+"_url.csv", "r") as inf :
             writer.writerow(book)
     outf.close()
 inf.close()
-print("Un fichier "+ category_title +".csv a été créé contenant toutes les informations de chaque livre de la categorie.")
+print("Un dossier "+ category_title +"a été créé contenant toutes les informations de chaque livre de la categorie.")
 
 os.system("pause") 
 
@@ -103,6 +114,5 @@ os.system("pause")
 # integrer le propgramme dans la boucle if/else
 # boucle en cas de else : redemander une categorie valide
 # boucle pour demander une autre categorie
-# creation de repertoire pour stocker les fichiers csv
 # recuperer les images
 # mise en page des fichiers csv
