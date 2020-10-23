@@ -44,7 +44,6 @@ with open("categories.csv", "w", newline="", encoding="utf8") as csvfile :
         csvfile.write(str(category_url)+"\n")
 csvfile.close()
 
-
 print("BIENVENUE SUR BOOK to SCRAPE : \n\n")
 
 while continuer_scraper :
@@ -128,15 +127,18 @@ while continuer_scraper :
             continuer_scraper = False
         else :
             continuer_scraper
-    else :
+
+    elif choice == "https://books.toscrape.com/catalogue/category/books_1/index.html":
         print("Adresse URL invalide, Veuillez reessayer.")
         continuer_scraper
-
+    else :
+        print("Adresse URL invalide, Veuillez reessayer.\n")
+        continuer_scraper
+        
 os.system("pause") 
 
 #A FAIRE
 # trouver comment avoir fieldnames=book.keys()
-# integrer le propgramme dans la boucle if/else
-# boucle en cas de else : redemander une categorie valide
-# mise en page des fichiers csv
-# certaines images ne s afiichent pas
+# certaines images ne s affichent pas
+# def fonction() pour alleger le script
+# ecrire un README
