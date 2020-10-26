@@ -7,24 +7,12 @@ from bs4 import BeautifulSoup
 
 import csv
 
-
-#Creation dossier qui va contenir TOUTES les categories de livres 
-path = 'BooksToScrape'
-try: 
-    os.makedirs(path)
-except OSError:
-    if not os.path.isdir(path):
-        Raise
-os.chdir(path) 
-
-products_urls = []
-categories_name = []
 categories_urls = []
+categories_name = []
+products_urls = []
 books =[]
-book ={}
 header =["product_page_url","universal_product_code","title","price_including_tax","price_excluding_tax","number_available","product_description","category","review_rating","image_url"]
-
-continuer_scraper = True
+book ={}
 
 url = "http://books.toscrape.com/"
 page = requests.get(url)
@@ -38,13 +26,23 @@ for item in li :
     category_name = item.find("a").get_text().strip()
     categories_name.append(category_name)
 
-#Creation d un fichier CSV contenant l url de toutes les categories de livres
+path = 'BooksToScrape'
+try: 
+    os.makedirs(path)
+except OSError:
+    if not os.path.isdir(path):
+        Raise
+os.chdir(path) 
+
+
 with open("categories.csv", "w", newline="", encoding="utf8") as csvfile :
     for category_url in categories_urls :
         csvfile.write(str(category_url)+"\n")
 csvfile.close()
 
 print("BIENVENUE SUR BOOK to SCRAPE : \n\n")
+
+continuer_scraper = True
 
 while continuer_scraper :
     choice = input("Quelle est l'URL de la categorie voulez vous scraper ? "+"\n")
@@ -55,7 +53,7 @@ while continuer_scraper :
         category_title = soup1.find(class_="page-header action").get_text().strip()
         book_div = soup1.find_all("article", class_="product_pod")
         for container in book_div:
-            product_page_url = "http://books.toscrape.com/catalogue/" + container.h3.a.get("href").replace('../../../', '').replace("../../", "")
+            product_page_url = "http://books.toscrape.com/catalogue/" + container.h3.a.get("href").replace('../', '')
             products_urls.append(product_page_url)
 
         for i in range(2,10) :
@@ -64,7 +62,7 @@ while continuer_scraper :
             soup2 = BeautifulSoup(page1.content,'html.parser')
             book_div = soup2.find_all("article", class_="product_pod")
             for container in book_div:
-                product_page_url = "http://books.toscrape.com/catalogue/" + container.h3.a.get("href").replace('../../../', '').replace("../../", "")
+                product_page_url = "http://books.toscrape.com/catalogue/" + container.h3.a.get("href").replace('../', '')
                 products_urls.append(product_page_url)
 
         print("La categorie contient : " + str(len(products_urls))+" livres.")
@@ -139,6 +137,3 @@ os.system("pause")
 
 #A FAIRE
 # trouver comment avoir fieldnames=book.keys()
-# certaines images ne s affichent pas
-# def fonction() pour alleger le script
-# ecrire un README
