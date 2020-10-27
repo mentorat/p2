@@ -1,6 +1,7 @@
 import os
 
 import requests
+
 from requests import get
 
 from bs4 import BeautifulSoup
@@ -10,8 +11,8 @@ import csv
 categories_urls = []
 categories_name = []
 products_urls = []
-books =[]
 header =["product_page_url","universal_product_code","title","price_including_tax","price_excluding_tax","number_available","product_description","category","review_rating","image_url"]
+books =[]
 book ={}
 
 url = "http://books.toscrape.com/"
@@ -27,26 +28,21 @@ for item in li :
     categories_name.append(category_name)
 
 path = 'BooksToScrape'
-try: 
-    os.makedirs(path)
-except OSError:
-    if not os.path.isdir(path):
-        Raise
-os.chdir(path) 
-
+exist_ok=False
+    os.makedirs(path, exist_ok=True)
+    os.chdir(path)
 
 with open("categories.csv", "w", newline="", encoding="utf8") as csvfile :
     for category_url in categories_urls :
         csvfile.write(str(category_url)+"\n")
-csvfile.close()
 
-print("BIENVENUE SUR BOOK to SCRAPE : \n\n")
+print("WELCOME TO BOOKS To SCRAPE \n\n")
 
-continuer_scraper = True
+continue_scrape = True
 
-while continuer_scraper :
-    choice = input("Quelle est l'URL de la categorie voulez vous scraper ? "+"\n")
-    print("Veuillez patienter ... "+"\n")
+while continue_scrape :
+    choice = input("Which category would you like to scrape ?\n\n")
+    print("Loading ... "+"\n")
     if choice in categories_urls :
         page1 = requests.get(choice)
         soup1 = BeautifulSoup(page1.content, 'html.parser')
@@ -65,21 +61,11 @@ while continuer_scraper :
                 product_page_url = "http://books.toscrape.com/catalogue/" + container.h3.a.get("href").replace('../', '')
                 products_urls.append(product_page_url)
 
-        print("La categorie contient : " + str(len(products_urls))+" livres.")
-        print("Veuillez patienter ... "+"\n")
-
-        path_cat = category_title
-        try: 
-            os.makedirs(path_cat)
-        except OSError:
-            if not os.path.isdir(path_cat):
-                Raise
-        os.chdir(path_cat)
-
+        exist_ok=False
+        os.makedirs(category_title, exist_ok=True)
         with open(category_title+"_url.csv", "w", newline="", encoding="utf8") as csvfile :
             for product_page_url in products_urls:
                 csvfile.write(str(product_page_url)+"\n")
-        csvfile.close()
 
         with open(category_title+"_url.csv", "r") as csvfile :
             with open(category_title+"_books.csv", "w", newline="", encoding="utf8") as outf :
@@ -92,6 +78,8 @@ while continuer_scraper :
                     book["product_page_url"] = url3
                     title = soup3.h1.string
                     book["title"] = title
+                    cleaned_title = [char for char in title if char.isalnum()]
+                    result ="".join(cleaned_title)
                     table_striped = soup3.find(class_="table table-striped")
                     td = table_striped.find_all("td")
                     book["universal_product_code"] = td[0].string
@@ -110,28 +98,26 @@ while continuer_scraper :
                     book["image_url"] = image_url
                     books.append(book)
                     images = requests.get(image_url)
-                    file = open(title +".jpg", "wb")
+                    file = open(str(result)+".jpg", "wb")
                     file.write(images.content)
-                    file.close()
+                    file.close()  
                     writer.writerow(book)
-            outf.close()
-        csvfile.close()
+    
+        print("Congradulation ! \n\n")
 
-        print("Un dossier "+ category_title +" a été créé contenant toutes les informations de chaque livre de la categorie.\n")
-
-        encore = input("Voulez-vous scraper une autre categorie de livre?   O/N \n")
-        if encore == "N" or encore == "n" or encore =="non" or encore =="NON":
-            print("Merci et a bientot!\n")
-            continuer_scraper = False
+        more_scrape = input("Would you like to scrape an other category ? Y/N \n")
+        if more_scrape in ["N", "n", "no", "NO"]:
+            print("Thank you for using our app !\n")
+            continue_scrape = False
         else :
-            continuer_scraper
+            continue_scrape
 
     elif choice == "https://books.toscrape.com/catalogue/category/books_1/index.html":
         print("Adresse URL invalide, Veuillez reessayer.")
-        continuer_scraper
+        continue_scrape
     else :
-        print("Adresse URL invalide, Veuillez reessayer.\n")
-        continuer_scraper
+        print("Incorrect adrress. Please try again.\n")
+        continue_scrape
         
 os.system("pause") 
 
