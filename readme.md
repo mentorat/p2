@@ -1,30 +1,29 @@
-BOOKS ONLINE  -   BOOKS to SCRAPE
-
-Version bêta d'un système pour suivre les prix des livres chez Books to Scrape, une application exécutable à la demande visant à récupérer les prix au moment de son exécution.
-
-PRE-REQUIS :<br>
+WEB SCRAPING - BOOKS To SCRAPE<br>
 <br>
-Python3 <br>
-pip install beautifulsoup4 <br>
-pip install requests <br>
+Beta version of a system for tracking book prices at BOOKS TO SCRAPE, an on-demand runtime application aimed at retrieving prices at runtime.<br>
 <br>
-LANCEMENT :<br>
+PRE-REQUIREMENTS:<br>
 <br>
-Executez bookstoscrape.py pour commencer <br>
-Creation d'un dossier BooksToScrape contenant un fichier categorie.csv <br>
-Copier/copier l'url de la categorie de livres a scraper <br>
-Creation d'un dossier au nom de la categorie  contenant : <br>
-    - un fichier csv des urls de tous les livres<br>
-    -les images de tous les livres<br>
-    - un fichier csv des informations de tous les livres :<br>
-        les informations extraites sont :<br>
-            -product_page_url <br>
-            -universal_ product_code (upc)<br>
-            -title<br>
-            -price_including_tax <br>
-            -price_excluding_tax <br>
-            -number_available <br>
-            -product_description <br>
-            -category <br>
-            -review_rating <br>
-            -image_url<br>
+Python3<br>
+pip install beautifulsoup4<br>
+pip install requests<br>
+<br>
+LAUNCH:<br>
+<br>
+Run script.py to start<br>
+Creation of a BooksToScrape repertory containing a categories.csv file<br>
+Copy / copy the url of the category wanted<br>
+Creation of a folder named by the category containing:<br>
+- pictures (jpg) of all books<br>
+- a csv file with all the books infomations<br>
+<br>the informations extracted are:<br>
+- product_page_url<br>
+- universal_ product_code (upc)<br>
+- title<br>
+- price_including_tax<br>
+- price_excluding_tax<br>
+- number_available<br>
+- product_description<br>
+- category<br>
+- review_rating<br>
+- image_url<br>
