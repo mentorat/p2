@@ -13,7 +13,7 @@ LAUNCH:<br>
 <br>
 Run scripts.py to start<br>
 Creating a BooksToScrape repertory containing a categorie.csv file<br>
- the url of the category wanted : <br>
+Copy/ paste the url of the category wanted : <br>
 Creation of a folder named by the category containing :<br>
 - a picture of all books <br>
 - a csv file with all the books : <br>
