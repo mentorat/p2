@@ -1,6 +1,6 @@
 WEB SCRAPING - BOOKS To SCRAPE<br>
 <br>
-Beta version of a system for tracking book prices at BOOKS TO SCRAPE, an on-demand runtime application aimed at retrieving prices at runtime.
+Beta version of a system for tracking book prices at BOOKS TO SCRAPE, an on-demand runtime application aimed at retrieving prices at runtime.<br>
 <br>
 PRE-REQUIREMENTS:<br>
 <br>
