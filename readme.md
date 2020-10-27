@@ -15,8 +15,13 @@ Creation of a BooksToScrape repertory containing a categories.csv file<br>
 Copy / copy the url of the category wanted<br>
 Creation of a folder named by the category containing:<br>
 - pictures (jpg) of all books<br>
+<<<<<<< HEAD
 - a csv file with all the books infomations<br>
 <br>the informations extracted are:<br>
+=======
+- a csv file with all the books infomations<br><br>
+the informations extracted are:<br>
+>>>>>>> 1ca1e4738e52aaa9ee6fa5c893fc8b34b7b12a26
 - product_page_url<br>
 - universal_ product_code (upc)<br>
 - title<br>
