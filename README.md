@@ -1,3 +1,4 @@
+
 WEB SCRAPING - BOOKS To SCRAPE<br>
 <br>
 Beta version of a system for tracking book prices at BOOKS TO SCRAPE, an on-demand runtime application aimed at retrieving prices at runtime.<br>
@@ -15,6 +16,7 @@ Creation of a BooksToScrape repertory containing a categories.csv file<br>
 Copy / copy the url of the category wanted<br>
 Creation of a folder named by the category containing:<br>
 - pictures (jpg) of all books<br>
+<<<<<<< HEAD:readme.md
 <<<<<<< HEAD
 - a csv file with all the books infomations<br>
 <br>the informations extracted are:<br>
@@ -22,6 +24,10 @@ Creation of a folder named by the category containing:<br>
 - a csv file with all the books infomations<br><br>
 the informations extracted are:<br>
 >>>>>>> 1ca1e4738e52aaa9ee6fa5c893fc8b34b7b12a26
+=======
+- a csv file with all the books infomations<br>
+<br>the informations extracted are:<br>
+>>>>>>> 338f010b5ee624d5a22409b4a8739c1b4c6892a3:README.md
 - product_page_url<br>
 - universal_ product_code (upc)<br>
 - title<br>
