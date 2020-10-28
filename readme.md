@@ -1,10 +1,10 @@
 WEB SCRAPING -  BOOKS TO SCRAPE <br>
 <br>
-## Overview
+## OVERVIEW
 Beta version of a system for tracking book prices at Books to Scrape, an on-demand runtime application aimed at retrieving prices at runtime.
 <br>
 <br>
-## PREREQUISITES <br>
+## REQUISITORIES <br>
 <br>
 Python3<br>
 beautifulsoup4 <br>
@@ -52,16 +52,15 @@ pip install requests
 - Start the application
 ```
 ./script.py
-
+```
 ## LAUNCH 
-<br>
+
 Run scripts.py to start<br>
 Creation of  a BooksToScrape repertory containing a categorie.csv file<br>
-Copy/ Paste the url of the category wanted : <br>
+Copy/ Paste the url of the category wanted<br>
 Creation of a folder named by the category containing :<br>
-- a picture of all books <br>
-- a csv file with all the books : <br>
-<br>
+- a picture of all books 
+- a csv file with all the books<br>
 the additional informations are :<br>
 - Product_page_url<br>
 - Universal_produit_code (upc)<br>
