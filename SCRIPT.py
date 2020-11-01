@@ -26,7 +26,6 @@ while continue_scrape:
     print("Loading ... "+"\n")
     if choice in category_url:
         main.get_books_details(choice)
-        print("Congradulation ! \n\n")
         more_scrape = input("Would you like to scrape an other category ? Y/N \n")
         if more_scrape in ["N", "n", "no", "NO"]:
             print("Thank you for using our app !\n")
