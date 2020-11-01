@@ -9,15 +9,12 @@ import csv
 
 def get_categories_urls(url,path):
     categories_urls = []
-    categories_name = []
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
     li = soup.find(class_= "nav nav-list").find_all("li")
     for item in li :
         category_url = str(url + item.find("a", href= True).get("href")).replace("http", "https")
         categories_urls.append(category_url)
-        category_name = item.find("a").get_text().strip()
-        categories_name.append(category_name)
     exist_ok=False
     os.makedirs(path, exist_ok=True)
     os.chdir(path)
@@ -53,7 +50,7 @@ def get_products_url(choice):
     return  products_urls
 
 def get_books_details(choice):
-    category_title = get_category_name(choice)
+        category_title = get_category_name(choice)
     products_urls = get_products_url(choice)
     with open(os.path.join(category_title, category_title+"_books.csv"), "w", newline="", encoding="utf8") as csvfile:
         header =["product_page_url","universal_product_code","title","price_including_tax","price_excluding_tax","number_available","product_description","category","review_rating","image_url"]
