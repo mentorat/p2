@@ -19,26 +19,21 @@ Start by closing the repository :
 git clone https://github.com/pascaline841/p2
 ```
 
-We recommend to use `virtualenv` for development:
 
-- Start by installing `virtualenv` if you don't have it
-```
-pip install virtualenv
-```
 
-- Once installed access the project folder
-```
-cd P02
-```
+- Start access the project folder
 
 - Create a virtual environment
 ```
-virtualenv venv
+python -m venv mon_env
 ```
 
 - Enable the virtual environment
 ```
-source venv/bin/activate
+cd mon_env/scripts
+```
+```
+source activate
 ```
 
 - Install the python dependencies on the virtual environment
