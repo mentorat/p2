@@ -84,5 +84,5 @@ def get_books_details(choice):
             images = requests.get(image_url) 
             with open(os.path.join(category_title, cleaned_title+".jpg"), "wb") as file:
                 file.write(images.content)
-            
+    print(" Congratulation, a folder named " + category_title + " has been created. It contains all the pictures from books and details in a file.csv.")        
           
